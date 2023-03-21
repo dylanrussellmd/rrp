@@ -1,8 +1,6 @@
 FROM rocker/r-ver:4.2.1
 
 LABEL org.opencontainers.image.source="https://github.com/dylanrussellmd/rrp" \
-      org.opencontainers.image.description="R environment for reproducible manuscripts." \
-      org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.vendor="Dylan Russell, MD" \
       org.opencontainers.image.base.name="rocker/r-ver" \
       org.opencontainers.image.ref.name="r-ver" \
