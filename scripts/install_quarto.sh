@@ -38,21 +38,19 @@ fi
 # Install quarto cli
 if [ "$QUARTO_VERSION" != "$INSTALLED_QUARTO_VERSION" ]; then
 
-        if [ "$QUARTO_VERSION" = "latest" ]; then
-            QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_download.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
-        elif [ "$QUARTO_VERSION" = "prerelease" ]; then
-            QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_prerelease.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
-        else
-            QUARTO_DL_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${ARCH}.deb"
-        fi
-        wget "$QUARTO_DL_URL" -O quarto.deb
-        dpkg -i quarto.deb
-        rm quarto.deb
+    if [ "$QUARTO_VERSION" = "latest" ]; then
+        QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_download.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
+    elif [ "$QUARTO_VERSION" = "prerelease" ]; then
+        QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_prerelease.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
+    else
+        QUARTO_DL_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${ARCH}.deb"
     fi
-
-    quarto check install
-
+    wget "$QUARTO_DL_URL" -O quarto.deb
+    dpkg -i quarto.deb
+    rm quarto.deb
 fi
+
+quarto check install
 
 # Clean up
 rm -rf /var/lib/apt/lists/*
