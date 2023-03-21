@@ -3,9 +3,8 @@
 ## Install quarto cli or symlink quarto cli so they are available system-wide.
 ##
 ## In order of preference, first argument of the script, the QUARTO_VERSION variable.
-## ex. latest, default, 0.9.16
+## ex. latest, 0.9.16
 ##
-## 'default' means the version bundled with RStudio if RStudio is installed, but 'latest' otherwise.
 ## 'latest', 'release' means installing the latest release version.
 ## 'prerelease' means installing the latest prerelease version.
 
@@ -14,7 +13,7 @@ set -e
 ## build ARGs
 NCPUS=${NCPUS:--1}
 
-QUARTO_VERSION=${1:-${QUARTO_VERSION:-"default"}}
+QUARTO_VERSION=${1:-${QUARTO_VERSION:-"latest"}}
 # Only amd64 build can be installed now
 ARCH=$(dpkg --print-architecture)
 
