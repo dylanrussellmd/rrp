@@ -5,8 +5,8 @@ LABEL org.opencontainers.image.description="R environment for reproducible manus
 LABEL org.opencontainers.image.licenses=MIT
 
 # These can be changed to specify a version, if desired.
-# ENV PANDOC_VERSION=latest
-# ENV QUARTO_VERSION=latest
+ENV PANDOC_VERSION=3.1.1
+ENV QUARTO_VERSION=1.2.335
 
 RUN /bin/sh -c rocker_scripts/install_pandoc.sh
 RUN /bin/sh -c rocker_scripts/install_quarto.sh
