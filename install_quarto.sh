@@ -18,12 +18,6 @@ QUARTO_VERSION=${1:-${QUARTO_VERSION:-"default"}}
 # Only amd64 build can be installed now
 ARCH=$(dpkg --print-architecture)
 
-# workaround for arm64 RStudio Daily build without quarto cli
-RSTUDIO_VERSION=${RSTUDIO_VERSION:-"stable"}
-if [ "${ARCH}" = "arm64" ] && [ "${RSTUDIO_VERSION}" = "daily" ]; then
-    echo "Skip installation of quarto cli..."
-    exit 0
-fi
 
 # a function to install apt packages only if they are not installed
 function apt_install() {
@@ -41,27 +35,11 @@ if [ -x "$(command -v quarto)" ]; then
     INSTALLED_QUARTO_VERSION=$(quarto --version)
 fi
 
-# Check RStudio bundled quarto cli
-if [ -f "/usr/lib/rstudio-server/bin/quarto/bin/quarto" ]; then
-    BUNDLED_QUARTO="/usr/lib/rstudio-server/bin/quarto/bin/quarto"
-fi
-
-if [ -n "$BUNDLED_QUARTO" ]; then
-    BUNDLED_QUARTO_VERSION="$($BUNDLED_QUARTO --version)"
-fi
 
 # Install quarto cli
 if [ "$QUARTO_VERSION" != "$INSTALLED_QUARTO_VERSION" ]; then
 
-    # Check RStudio bundled quarto cli
-    if [ "$QUARTO_VERSION" = "default" ] && [ -z "$BUNDLED_QUARTO" ]; then
-        QUARTO_VERSION="latest"
-    fi
-
-    if [ "$QUARTO_VERSION" = "$BUNDLED_QUARTO_VERSION" ] || [ "$QUARTO_VERSION" = "default" ]; then
-        ln -fs "$BUNDLED_QUARTO" /usr/local/bin
-    else
-        if [ "$QUARTO_VERSION" = "latest" ] || [ "$RSTUDIO_VERSION" = "release" ]; then
+        if [ "$QUARTO_VERSION" = "latest" ]; then
             QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_download.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
         elif [ "$QUARTO_VERSION" = "prerelease" ]; then
             QUARTO_DL_URL=$(wget -qO- https://quarto.org/docs/download/_prerelease.json | grep -oP "(?<=\"download_url\":\s\")https.*${ARCH}\.deb")
