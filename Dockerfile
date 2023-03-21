@@ -1,1 +1,4 @@
 FROM rocker/r-ver:4.2.1
+
+ENV PANDOC_VERSION=latest
+ENV QUARTO_VERSION=latest
