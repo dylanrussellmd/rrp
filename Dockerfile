@@ -14,4 +14,8 @@ ENV TINYTEX_VERSION=2023.03
 RUN /bin/sh -c rocker_scripts/install_pandoc.sh
 RUN /bin/sh -c rocker_scripts/install_quarto.sh
 RUN /bin/sh -c rocker_scripts/install_tidyverse.sh
+
+# Install TinyTeX
 RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+# This is necessary to point the path to the TinyTeX symlinks.
+ENV PATH="${PATH}:${HOME}/bin"
