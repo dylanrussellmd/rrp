@@ -14,4 +14,4 @@ ENV TINYTEX_VERSION=2023.03
 RUN /bin/sh -c rocker_scripts/install_pandoc.sh
 RUN /bin/sh -c rocker_scripts/install_quarto.sh
 RUN /bin/sh -c rocker_scripts/install_tidyverse.sh
-RUN quarto install tinytex --no-prompt
+RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
