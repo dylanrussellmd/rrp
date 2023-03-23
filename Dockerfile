@@ -19,3 +19,17 @@ RUN /bin/sh -c rocker_scripts/install_tidyverse.sh
 # Install TinyTeX and add location of root/bin to PATH
 RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
 ENV PATH=$PATH:root/bin
+
+# Set tlmgr repository to end of 2022
+# TODO This needs to be scripted so that the repository can be set to one that is active (i.e. can initialize)
+# and to the latest remote repository that is before the selected TexLive version.
+RUN tlmgr option repository https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/2022/tlnet-final
+
+# Update all TexLive packages
+#RUN tlmgr update --all
+
+# Install additional packages needed by Quarto
+# TODO check if these libraries are installed prior to installing
+RUN apt update && apt install -y \
+      libxtst6 \
+      libxt6 
