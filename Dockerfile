@@ -18,4 +18,4 @@ RUN /bin/sh -c rocker_scripts/install_tidyverse.sh
 # Install TinyTeX
 RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
 # This is necessary to point the path to the TinyTeX symlinks.
-ENV PATH="${PATH}:${HOME}/bin"
+RUN PATH=$PATH:$HOME/bin
