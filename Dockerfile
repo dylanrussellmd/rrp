@@ -6,16 +6,16 @@ LABEL org.opencontainers.image.source="https://github.com/dylanrussellmd/rrp" \
       org.opencontainers.image.ref.name="r-ver" \
       org.opencontainers.image.authors="Dylan Russell <dyl.russell@gmail.com>"
 
-# These can be changed to specify a version, if desired.
+# These can be changed to specify versions, if desired.
 ENV PANDOC_VERSION=3.1.1
 ENV QUARTO_VERSION=1.2.335
 ENV TINYTEX_VERSION=2023.03
 
+# Use selected rocker scripts
 RUN /bin/sh -c rocker_scripts/install_pandoc.sh
 RUN /bin/sh -c rocker_scripts/install_quarto.sh
 RUN /bin/sh -c rocker_scripts/install_tidyverse.sh
 
-# Install TinyTeX
+# Install TinyTeX and add location of root/bin to PATH
 RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
-# This is necessary to point the path to the TinyTeX symlinks.
-RUN PATH=$PATH:$HOME/bin
+ENV PATH=$PATH:root/bin
